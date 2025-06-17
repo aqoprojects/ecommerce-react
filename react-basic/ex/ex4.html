@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+<style>
+  Button{
+    background-color: rgb(0, 123, 255);
+    color: white;
+    border: none;
+    padding: 0.4rem 0.7rem;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .active--btn{
+    background-color: rgb(25, 135, 84);
+  }
+
+  .disactive--btn{
+    background-color: rgb(220, 53, 69);
+  }
+</style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/supersimpledev/react.js"></script>
+  <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+
+  <script src="https://unpkg.com/supersimpledev/chatbot.js"></script>
+
+  <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+  <script src="https://unpkg.com/supersimpledev/dayjs.js"></script>
+  <script type="text/babel">
+
+    const container = document.getElementById("root")
+    const root = ReactDOM.createRoot(container)
+
+    function SwitchButton(){
+      const [isButtonOn, setIsButtonOn] = React.useState(true)
+
+      function Switch(){
+        if(isButtonOn == true){
+          setIsButtonOn(false)
+        } else {
+          setIsButtonOn(true)
+        }
+      }
+      return (
+        <button className={isButtonOn ? "active--btn": "disactive--btn"}  onClick={Switch}>{isButtonOn? "ON":"OFF"}</button>
+      )
+    }
+
+
+
+
+    function InputForm({placeholder, type}){
+
+      return (
+        <input 
+          placeholder={placeholder} 
+          type={type}/>
+      )
+    }
+
+
+
+    function GroupedInputForm(){
+      const [isShowPassword, setIsShowPassword] = React.useState(false) 
+      function showPassword(){
+      if (isShowPassword === false) setIsShowPassword(true) 
+      else setIsShowPassword(false)
+      } 
+      return (
+        <>
+        <InputForm placeholder="Email" type="email" />
+        <InputForm placeholder="Password" type={isShowPassword ?"text":"password"} />
+        <button onClick={showPassword}>Show</button>
+        </>
+      )
+    }
+
+    function ButtonForm(){
+
+      return (
+        <div>
+        <button>Login</button>
+        <button>SIgn up</button>
+        </div>
+      )
+    }
+
+    function FormContainer(){
+
+      return (
+        <>
+        <p>Hello, Welcome to my website</p>
+        <GroupedInputForm/>
+        <ButtonForm />
+        </>
+      )
+    }
+
+
+    function Clock(){
+
+      const [dateTime, setDateTime] = React.useState(dayjs().format('HH:mm:ss'))
+
+      React.useEffect(() => {
+          setInterval(() => {
+            setDateTime(dayjs().format('HH:mm:ss'));
+          }, 1000);
+          console.log("YOOOOOOOOOOOOOOOOOO");
+
+        // Important: make sure to give React.useEffect()
+        // a dependency array of [] so it only runs once!
+        }, []);
+
+      return (
+        <p>Current time {dateTime}</p>
+      )
+    }
+
+
+
+    function App(){
+      return (
+        <>
+        <SwitchButton/>
+        <FormContainer/>
+        <Clock />
+        </>
+      )
+    }
+    root.render(
+      <App/>
+    )
+
+  </script>
+  
+</body>
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="root"></div>
+
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+    <script src="https://unpkg.com/supersimpledev/dayjs.js"></script>
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+
+    <script type="text/babel">
+
+      // function ResetCounter({setTotalCount})
+      // {
+      //   function reset(){
+      //     setTotalCount(0)
+      //   }
+      //   return (
+      //     <button onClick={reset}>Reset</button>
+      //   )
+      // }
+
+      // function Counter({TotalCount, setTotalCount}) {
+      //  console.log(TotalCount);
+      //  console.log(setTotalCount);
+
+      //   function getCount(){
+      //     setTotalCount(
+      //       TotalCount + 1
+      //     )
+      //   }
+
+      //   return(
+      //     <button onClick={getCount}>Clicked {TotalCount} {TotalCount === 1? "time": "times"}</button>
+      //   )
+      // }
+
+
+      // function Typing({GetMessage, setGetMessage}){
+        
+      //   function getText(event){
+      //     setGetMessage(event.target.value)
+      
+      //   }
+
+      //   return (
+      //     <>
+      //       <input onChange={getText}  value={GetMessage} />
+      //     </>
+      //   )
+      // }
+
+
+      // function ResetMessage({setGetMessage}){
+      
+      //   function reset(){
+      //     setGetMessage("")
+      //   }
+
+      //   return (
+      //     <>
+      //       <button onClick={reset}>reset</button>
+           
+      //     </>
+      //   )
+      // }
+
+
+
+      function MessageInput({GetMessage, setGetMessage}){
+
+        function SendOrCancel(event){
+          if (event.key === "Enter") {
+            setGetMessage( event.target.value)
+            // console.log(event);jh
+          } else if (event.key === "Escape") {
+            setGetMessage("")
+          }
+        }
+
+        function getText(event){
+          setGetMessage(event.target.value)
+      
+        }
+
+        return (
+          <>
+          <input value={GetMessage} onChange={getText}  onKeyDown={SendOrCancel}/>
+          <button>Submit</button>
+          </>
+        )
+      }
+
+
+      function Message({GetMessage}){
+        
+        return (
+          <>
+            <p>Hello {GetMessage}</p>
+          </>
+        )
+      }
+
+
+
+      function GenerateMessage({setGetMessage}){
+        const names = ["jade", "mike", "john", "alex", "adam", "gable"]
+
+        function reset(){
+          const randomNumber = Math.ceil(Math.random() * 4)
+          setGetMessage(names[randomNumber])
+        }
+
+        return (
+          <>
+            <button onClick={reset}>Example</button>
+           
+          </>
+        )
+      }
+
+
+      // function Message({GetMessage}){
+        
+      //   return (
+      //     <>
+      //       <p>Hello {GetMessage}</p>
+      //     </>
+      //   )
+      // }
+
+
+
+
+      function App(){
+        
+          // <Typing GetMessage={GetMessage} setGetMessage={setGetMessage}  />
+          // <ResetMessage setGetMessage={setGetMessage} />
+          // <GenerateMessage setGetMessage={setGetMessage}/>
+        const [GetMessage, setGetMessage] = React.useState("")
+        return(
+          <>
+          <MessageInput setGetMessage={setGetMessage} GetMessage={GetMessage} />
+          <Message GetMessage={GetMessage} />
+          </>
+        )
+        // const [TotalCount, setTotalCount] = React.useState(0)
+
+        // return (<>
+        // <Counter TotalCount={TotalCount} setTotalCount={setTotalCount} />
+        // <Counter TotalCount={TotalCount} setTotalCount={setTotalCount} />
+        // <ResetCounter setTotalCount={setTotalCount} />
+        // </>)
+      }
+
+      const root = document.getElementById("root")
+      const site = ReactDOM.createRoot(root)
+
+      site.render(
+        <App />
+      )
+
+    </script>
+</body>
+</html>
