@@ -82,7 +82,7 @@ export function Product ( { product, loadCart } )
 
       <div className="product-spacer"></div>
 
-      <div className="added-to-cart">
+      <div className="added-to-cart" style={{opacity: cartAddedMessage ? 1:0}}>
         <img src="images/icons/checkmark.png" />
         Added
       </div>
