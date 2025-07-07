@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { formatMoney } from "../../utils/money";
 import axios from "axios";
 
@@ -7,13 +7,28 @@ export function Product ( { product, loadCart } )
 {
 
   const [ quantity, setQuantity ] = useState( 1 );
+  const [cartAddedMessage, setCartAddedMessage] = useState(false)
+  const cartAddedMessageTs = useRef(null)
+
+  const isCartAdded = ()=>{
+    if(cartAddedMessageTs.current){
+      clearTimeout(cartAddedMessageTs.current)
+    }
+    setCartAddedMessage(true)
+    cartAddedMessageTs.current = setTimeout(()=>{
+      setCartAddedMessage(false)
+    }, 1500)
+  }
+
   const addToCart = async () =>
   {
     await axios.post( 'https://ecommerce-rest-api-f54h.onrender.com/api/v1/cart-product/', {
       productId: product.id,
       quantity
     } );
+    
     await loadCart();
+    isCartAdded();
   };
 
   const selectQuantity = ( event ) =>
